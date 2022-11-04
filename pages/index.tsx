@@ -21,15 +21,16 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-         <form action="/send-data-here" method="post">
-         <label for="city">City:</label>
-         <input type="text" id="city" name="city" />
-         <button type="submit">Submit</button>
-         </form>
+          <form onSubmit={submitLocation2}>
+          <label for="city">City: </label>
+          <input type="text" id="city" name="city"/>
+          <button type="submit">Submit</button>
+         </form> 
 
-          
-       </div>
+         
+        </div>
       </main>
+	
 
       <footer className={styles.footer}>
         <a
@@ -44,5 +45,15 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  )
+  );
+}
+
+function submitLocation2(event) {
+  alert(event.target.city.value);
+  //const location = event.target.city.value;
+  //const info = await fetch('http://api.openweathermap.org/geo/1.0/direct?q={location}&appid={a06f7c0500b6f20cb044d20ec3d49dc0}')
+  //const information = await info.json();
+  //const res = await fetch('https://api.openweathermap.org/data/2.5/weather?lat={info.lat}&lon={info.lon}&appid={a06f7c0500b6f20cb044d20ec3d49dc0}');
+  //const result = await res.json();
+  //alert(`The weather in ${city} is: ${result}`);
 }
