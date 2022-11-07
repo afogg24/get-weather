@@ -11,7 +11,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main className={styles.main} >
         <h1 className={styles.title}>
           Weather App
         </h1>
@@ -21,14 +21,13 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <form onSubmit={submitLocation2}>
-          <label for="city">City: </label>
+          <form onSubmit={submitLocation}>
+          <label htmlFor="city">City: </label>
           <input type="text" id="city" name="city"/>
           <button type="submit">Submit</button>
          </form> 
-
-         
         </div>
+        <p id="output"></p>
       </main>
 	
 
@@ -48,12 +47,24 @@ export default function Home() {
   );
 }
 
-function submitLocation2(event) {
-  alert(event.target.city.value);
-  //const location = event.target.city.value;
-  //const info = await fetch('http://api.openweathermap.org/geo/1.0/direct?q={location}&appid={a06f7c0500b6f20cb044d20ec3d49dc0}')
-  //const information = await info.json();
-  //const res = await fetch('https://api.openweathermap.org/data/2.5/weather?lat={info.lat}&lon={info.lon}&appid={a06f7c0500b6f20cb044d20ec3d49dc0}');
-  //const result = await res.json();
-  //alert(`The weather in ${city} is: ${result}`);
+//<h2>Temperature is + <span id="myText"></span>+ °C </h2>
+
+const submitLocation = async (event) => {
+  event.preventDefault();
+  const location = event.target.city.value;
+  try {
+    // get geolocation data
+    const info = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=a06f7c0500b6f20cb044d20ec3d49dc0`);
+    const information = await info.json();
+    // get temperature data
+    const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${information[0].lat}&lon=${information[0].lon}&appid=a06f7c0500b6f20cb044d20ec3d49dc0`);
+    const result = await res.json();
+    // parse result and convert to celsius
+    const temp = parseFloat(result.main.temp) - 273;
+    // display temperature
+    const toDisplay = "The temperature in " + location + " is: " + temp.toFixed(2) + "°C";
+    document.getElementById('output').innerHTML = toDisplay;
+  } catch {
+    document.getElementById('output').innerHTML = "No weather information for " + location;
+  }
 }
