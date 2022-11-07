@@ -70,5 +70,6 @@ const submitLocation = async (event) => {
     document.getElementById('output2').innerHTML = toDisplay2;
   } catch {
     document.getElementById('output1').innerHTML = "There is no temperature information for the inputted location";
+    document.getElementById('output2').innerHTML = "";
   }
 }
