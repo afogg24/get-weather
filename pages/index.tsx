@@ -27,7 +27,8 @@ export default function Home() {
           <button type="submit">Submit</button>
          </form> 
         </div>
-        <p id="output"></p>
+        <p id="output1"></p>
+        <p id="output2"></p>
       </main>
 	
 
@@ -47,8 +48,6 @@ export default function Home() {
   );
 }
 
-//<h2>Temperature is + <span id="myText"></span>+ °C </h2>
-
 const submitLocation = async (event) => {
   event.preventDefault();
   const location = event.target.city.value;
@@ -56,15 +55,20 @@ const submitLocation = async (event) => {
     // get geolocation data
     const info = await fetch(`http://api.openweathermap.org/geo/1.0/direct?q=${location}&appid=a06f7c0500b6f20cb044d20ec3d49dc0`);
     const information = await info.json();
+
     // get temperature data
     const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${information[0].lat}&lon=${information[0].lon}&appid=a06f7c0500b6f20cb044d20ec3d49dc0`);
     const result = await res.json();
+
     // parse result and convert to celsius
     const temp = parseFloat(result.main.temp) - 273;
+    const feels_like = parseFloat(result.main.feels_like) - 273;
     // display temperature
-    const toDisplay = "The temperature in " + location + " is: " + temp.toFixed(2) + "°C";
-    document.getElementById('output').innerHTML = toDisplay;
+    const toDisplay1 = "The temperature in " + location + " is: " + temp.toFixed(2) + "°C";
+    const toDisplay2 = "Feels like " + feels_like.toFixed(2) + "°C";
+    document.getElementById('output1').innerHTML = toDisplay1;
+    document.getElementById('output2').innerHTML = toDisplay2;
   } catch {
-    document.getElementById('output').innerHTML = "No weather information for " + location;
+    document.getElementById('output1').innerHTML = "There is no temperature information for the inputted location";
   }
 }

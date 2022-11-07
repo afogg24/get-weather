@@ -3,7 +3,7 @@
 }
 
 .main {
-  background: #90b8ef;
+  background: #659dbd;
   min-height: 100vh;
   padding: 4rem 0;
   flex: 1;
@@ -14,7 +14,7 @@
 }
 
 .footer {
-  background: #fcaf97;
+  background: #fbeec1;
   display: flex;
   flex: 1;
   padding: 2rem 0;
